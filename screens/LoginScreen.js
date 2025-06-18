@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text } from 'react-native';
 import { auth } from './firebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -17,6 +17,15 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
+  const register = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigation.navigate('Dashboard');
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
     <View>
       <Text>Email:</Text>
@@ -24,6 +33,7 @@ export default function LoginScreen({ navigation }) {
       <Text>Password:</Text>
       <TextInput secureTextEntry onChangeText={setPassword} value={password} />
       <Button title="Login" onPress={login} />
+      <Button title="Register" onPress={register} />
     </View>
   );
 }

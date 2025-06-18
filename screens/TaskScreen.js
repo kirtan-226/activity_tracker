@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { addTask } from '../services/taskService';
 
-export default function TaskScreen() {
+export default function TaskScreen({ navigation }) {
   const [title, setTitle] = useState('');
   const [xp, setXp] = useState('');
 
@@ -11,6 +11,7 @@ export default function TaskScreen() {
     Alert.alert("Task Added!");
     setTitle('');
     setXp('');
+    navigation.goBack();
   };
 
   return (
